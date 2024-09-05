@@ -336,7 +336,7 @@ namespace lib
     }   
 }
 
-namespace MyTypes
+namespace lib
 {
     template <typename T, typename data_buf>
     matrix<T, data_buf> operator+(const matrix<T, data_buf>& lhs, const matrix<T, data_buf>& rhs)
@@ -358,26 +358,26 @@ namespace MyTypes
 }
 
 template <typename T, typename data_buf>
-std::ostream& operator<<(std::ostream& os, const MyTypes::matrix<T, data_buf>& mat)
+std::ostream& operator<<(std::ostream& os, const lib::matrix<T, data_buf>& mat)
 {
     mat.dump(os);
     return os;
 }
 
 template <typename T, typename data_buf>
-bool operator==(const MyTypes::matrix<T, data_buf>& mat1, const MyTypes::matrix<T, data_buf>& mat2) noexcept
+bool operator==(const lib::matrix<T, data_buf>& mat1, const lib::matrix<T, data_buf>& mat2) noexcept
 {
     return mat1.equal(mat2);
 }
 
 template <typename T, typename data_buf>
-bool operator!=(const MyTypes::matrix<T, data_buf>& mat1, const MyTypes::matrix<T, data_buf>& mat2) noexcept
+bool operator!=(const lib::matrix<T, data_buf>& mat1, const lib::matrix<T, data_buf>& mat2) noexcept
 {
     return !mat1.equal(mat2);
 }
 #if 0
 // class to ptinting matrix
-namespace MyTypes
+namespace lib
 {
     template <typename T, typename data_buf, template<typename> class matrix>
     class printMat

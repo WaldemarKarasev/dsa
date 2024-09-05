@@ -1,5 +1,4 @@
-#ifndef VECTOR_H
-#define VECTOR_H
+#pragma once
 
 #include <stddef.h>
 #include <type_traits>
@@ -348,7 +347,6 @@ namespace lib::containers
         }
 
     };
-}
 
 template <typename T>
 std::ostream& operator<<(std::ostream& os, containers::vector<T>& vec)
@@ -357,4 +355,4 @@ std::ostream& operator<<(std::ostream& os, containers::vector<T>& vec)
     return os;
 }
 
-#endif
+} // namespace lib::containers

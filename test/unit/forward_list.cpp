@@ -17,7 +17,7 @@ using list = lib::containers::ForwaredList<T>;
 
 TEST(Atomic, Load) {
 
-    ForwaredList<int> list;
+    list<int> list;
 }
 
 int main(int argc, char *argv[])

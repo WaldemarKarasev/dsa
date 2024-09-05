@@ -7,7 +7,8 @@ namespace lib::containers {
 template <typename T>
 class ForwaredList
 {
-    static_assert(std::is_move_assignable_v<T>);
+    static_assert(std::is_move_assignable_v<T> && std::is_move_constructible_v<T>);
+    static_assert(std::is_copy_assignable_v<T> && std::is_copy_constructible_v<T>);
 
 public:
     using size_type = std::size_t;
@@ -35,7 +36,7 @@ public:
 
 
     ForwaredList()
-        : top_node_{top_node_->next_}
+        : top_{top_->next_}
         , size_{0} 
     {
 
@@ -74,7 +75,7 @@ public:
 
     T get_at(size_type idx)
     {
-        return get_at_impl(idx);
+        return get_at_(idx);
     }
 
 private:
@@ -82,26 +83,16 @@ private:
     {
         node* new_node = create_node(std::move(data));
         new_node->hook(top_->next_);
+        ++size_;
     }
 
-    void insert_last(T data)
+    T get_at_(size_type idx)
     {
-        base_node* new_node = new node();
+        base_node* last = list_traverse(idx);
 
-        tail_->next_ = new_node;
-        tail_ = new_node;
-
-        new_node->next_ = head_;
-        new_node->data_ = std::move(data);
-    }
-
-    T get_at_impl(size_type idx)
-    {
-        base_node* sought_node = list_traverse(idx);
-
-        if (sought_node != nullptr)
+        if (last != nullptr)
         {
-            return curr_node->data_; // copy or should i return reference
+            return static_cast<node*>(last)->data_; // copy or should i return reference
         }   
 
         return {};
@@ -109,30 +100,27 @@ private:
 
     void insert_at(size_type idx, T data)
     {
-        base_node* sought = list_traverse(idx);
+        base_node* nd_to_hook = list_traverse(idx);
 
-        if (sought != nullptr)
+        if (nd_to_hook != nullptr)
         {
-            curr->data_ = std::move(data);
+            node* new_node = create_node(std::move(data));
+            new_node->hook(nd_to_hook);
+            ++size_;
         }
     }
 
     void delete_at(size_type idx)
     {
-        if (idx > size_) { return nullptr; }
+        if (idx > size_) { return; }
 
-        base_node* node_to_delete = head_;
-        base_node* prev = head_;
-        size_type step = 0;
-        while (step < idx)
-        {
-            prev = node_to_delete;
-            node_to_delete = curr->next_;
-        }
-
-        prev->next_ = node_to_delete->netx_;
+        base_node* before_node_to_delete = list_traverse(idx);
+        base_node* node_to_delete = before_node_to_delete->next_;
+        
+        node_to_delete->next_->hook(before_node_to_delete);
 
         delete node_to_delete;
+        --size_;
     }
 
 private:
@@ -140,23 +128,24 @@ private:
     node* create_node(T data)
     {
         node* created_node = new node();
-        create_node->data = std::move(data);
-        return create_node;
+        created_node->data = std::move(data);
+        return created_node;
     }
 
 
-    node* list_traverse(size_type idx)
+    base_node* list_traverse(size_type idx)
     {
         if (idx > size_) { return nullptr; }
 
-        node* curr = head_;
+        base_node* trav_node = top_->next_;
         size_type step = 0;;
         while (step < idx)
         {
-            curr = curr->next_;
+            trav_node = trav_node->next_;
+            ++step;
         }
 
-        return curr;
+        return trav_node;
     }
 
 private:

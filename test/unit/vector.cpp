@@ -3,12 +3,12 @@
 #include <iostream>
 
 
-#include <lib/containers/vector/vector.hpp>
+#include <lib/containers/vector.hpp>
 
 using s_t = lib::containers::vector<int>::size_type;
 
 template <typename T>
-using vector = lib::containers::vector<T>
+using vector = lib::containers::vector<T>;
 
 TEST(ctor_test, DEFAULT_CTOR)
 {
