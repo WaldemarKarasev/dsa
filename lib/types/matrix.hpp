@@ -6,10 +6,10 @@
 #include <type_traits>
 
 #define MY_DEBUG
-#include "../data_structures/debug.h"
-#include "../data_structures/vector/vector.h"
+#include <lib/utility.hpp>
+#include <lib/containers/vector.hpp>
 
-namespace MyTypes
+namespace lib
 {
     template <typename T, typename data_buf = containers::vector<T>>
     class matrix
@@ -121,10 +121,6 @@ namespace MyTypes
 
     };
     
-}
-
-namespace MyTypes
-{
     template <typename T, typename data_buf>
     matrix<T, data_buf>::matrix(size_type rows, size_type cols)
     : m_rows_(rows), m_cols_(cols), m_buf_(m_rows_*m_cols_)

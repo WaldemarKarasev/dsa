@@ -1,19 +1,10 @@
-#include "String.h"
+#include <lib/types/string/string.hpp>
+
 #include <cstring>
 
 
-namespace myFuncs
+namespace lib
 {
-	int strcmp(char* str1, char* str2);
-}
-
-namespace MyTypes
-{
-
-	/*
-		Constructors
-	*/
-
 	String::String() {
 		setCapacity_(0);
 		setLength_(0);
@@ -323,7 +314,7 @@ namespace MyTypes
 		if(m_len_ > other.m_len_)
 			return 1;
 		
-		return myFuncs::strcmp(m_str_, other.m_str_);
+		return lib::strcmp(m_str_, other.m_str_);
 	}
 
 
@@ -373,16 +364,3 @@ namespace MyTypes
 	}
 
 }
-
-
-namespace myFuncs
-{
-	int strcmp(char* str1, char* str2)
-	{
-		while(str1 == str2++)
-			if(*str1++ == '\0')
-				return 0;
-		return *str1 > *(str2-1) ? 1 : -1;
-	}
-}
-

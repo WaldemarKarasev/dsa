@@ -1,12 +1,10 @@
-#ifndef STRING_H
-#define STRING_H
-
+#pragma once
 #include <iostream>
 
 //#define MY_DEBUG
-#include "../debug.h"
+#include <lib/utility.hpp>
 
-namespace MyTypes
+namespace lib
 {
     class String final{
 
@@ -101,5 +99,3 @@ namespace MyTypes
     std::ostream& operator<<(std::ostream& os, const String& str);
 
 }
-
-#endif

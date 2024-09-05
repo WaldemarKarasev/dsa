@@ -7,9 +7,9 @@
 #include <exception>
 
 //#define MY_DEBUG
-#include "../debug.h"
+#include <lib/utility.hpp>
 
-namespace containers
+namespace lib::containers
 {
     template <typename T> void construct(T* p, const T& rhs) { new (p) T(rhs); }   
     template <typename T> void destroy(T* p) noexcept { p->~T(); }

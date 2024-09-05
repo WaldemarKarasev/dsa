@@ -1,14 +1,18 @@
 #include <gtest/gtest.h>
-#include "vector.h"
 #include <initializer_list>
-
 #include <iostream>
 
-using s_t = containers::vector<int>::size_type;
+
+#include <lib/containers/vector/vector.hpp>
+
+using s_t = lib::containers::vector<int>::size_type;
+
+template <typename T>
+using vector = lib::containers::vector<T>
 
 TEST(ctor_test, DEFAULT_CTOR)
 {
-    containers::vector<int> vec;
+    vector<int> vec;
     EXPECT_EQ(0, vec.allocated());
     EXPECT_EQ(0, vec.size());
     EXPECT_EQ(nullptr, vec.data());
@@ -16,11 +20,11 @@ TEST(ctor_test, DEFAULT_CTOR)
 
 TEST(ctor_test, DEFAULT_MOVE_CTOR)
 {
-    containers::vector<int> vec1(2, 2);
+    vector<int> vec1(2, 2);
     s_t alloc = vec1.allocated();
     s_t size = vec1.size();
     
-    containers::vector<int> vec2 = std::move(vec1);
+    vector<int> vec2 = std::move(vec1);
 
     EXPECT_EQ(0, vec1.allocated());
     EXPECT_EQ(0, vec1.size());
@@ -36,13 +40,13 @@ TEST(ctor_test, DEFAULT_MOVE_CTOR)
 
 TEST(ctor_test, DEFAULT_MOVE_ASSIGNMENT)
 {
-    containers::vector<int> vec1(2, 2);
-    using s_t = containers::vector<int>::size_type;
+    vector<int> vec1(2, 2);
+    using s_t = vector<int>::size_type;
     s_t alloc = vec1.allocated();
     s_t size = vec1.size();
     auto ptr = vec1.data();
 
-    containers::vector<int> vec2;
+    vector<int> vec2;
     vec2 = std::move(vec1);
 
     EXPECT_EQ(0, vec1.allocated());
@@ -56,8 +60,8 @@ TEST(ctor_test, DEFAULT_MOVE_ASSIGNMENT)
 
 TEST(ctor_test, COPY_CTOR)
 {
-    containers::vector<int> vec1(2, 2);
-    containers::vector<int> vec2(vec1);
+    vector<int> vec1(2, 2);
+    vector<int> vec2(vec1);
 
     EXPECT_EQ(vec1.allocated(), vec2.allocated());
     EXPECT_EQ(vec1.size(), vec2.size());
@@ -66,8 +70,8 @@ TEST(ctor_test, COPY_CTOR)
 
 TEST(ctor_test, COPY_ASSIGNMENT)
 {
-    containers::vector<int> vec1(2, 2);
-    containers::vector<int> vec2;
+    vector<int> vec1(2, 2);
+    vector<int> vec2;
     
     vec2 = vec1;
 
@@ -79,7 +83,7 @@ TEST(ctor_test, COPY_ASSIGNMENT)
 TEST(ctor_test, INITLIST_CTOR)
 {
     std::initializer_list<int> list = {0, 1, 2, 3, 4};
-    containers::vector<int> vec{0, 1, 2, 3, 4};
+    vector<int> vec{0, 1, 2, 3, 4};
     
     EXPECT_EQ(list.size(), vec.size());
     EXPECT_EQ(list.size(), vec.allocated());
@@ -92,7 +96,7 @@ TEST(ctor_test, INITLIST_CTOR)
 
 TEST(ctor_test, SZ_AND_VAL_CTOR)
 {
-    containers::vector<int> vec(2, 2);
+    vector<int> vec(2, 2);
     EXPECT_EQ(2, vec.allocated());
     EXPECT_EQ(2, vec.size());
     EXPECT_EQ(2, vec.allocated());
@@ -101,11 +105,11 @@ TEST(ctor_test, SZ_AND_VAL_CTOR)
 
 TEST(operators_test, OP_EQ)
 {
-    containers::vector<int> vec1(2, 2);
-    containers::vector<int> vec2(2, 2);
-    containers::vector<int> vec3(2, 3);
-    containers::vector<int> vec4(3, 2);
-    containers::vector<int> vec5(2, 3);
+    vector<int> vec1(2, 2);
+    vector<int> vec2(2, 2);
+    vector<int> vec3(2, 3);
+    vector<int> vec4(3, 2);
+    vector<int> vec5(2, 3);
 
     EXPECT_EQ(vec1, vec2);
     EXPECT_NE(vec1, vec3);
@@ -120,7 +124,7 @@ TEST(operators_test, OP_EQ)
 TEST(allocation_test, REALLOC)
 {
     constexpr s_t SZ = 10;
-    containers::vector<int> vec(SZ, 1);
+    vector<int> vec(SZ, 1);
 
     vec.push(2);
 
@@ -131,7 +135,7 @@ TEST(allocation_test, REALLOC)
 
 TEST(exception_test, POP_EXCEPTION)
 {
-    containers::vector<int> vec(1, 1);
+    vector<int> vec(1, 1);
     try
     {
         vec.pop();
@@ -151,7 +155,7 @@ TEST(exception_test, POP_EXCEPTION)
 
 TEST(exception_test, TOP_EXCEPTION)
 {
-    containers::vector<int> vec;
+    vector<int> vec;
     try
     {
         vec.top();

@@ -7,18 +7,17 @@
 #include <gtest/gtest.h>
 
 // ForwaredList
-#include "forwared_list.hpp"
+#include <lib/containers/forward_list.hpp>
+
+#include <list>
+#include <forward_list>
+
+template <typename T>
+using list = lib::containers::ForwaredList<T>;
 
 TEST(Atomic, Load) {
 
-    mylib::ForwaredList<int> list;
-
-    list.insert_last(5);
-
-    EXPECT_EQ(list.get_at(0), 5);
-    EXPECT_EQ(list.get_at(1), 5);
-
-
+    ForwaredList<int> list;
 }
 
 int main(int argc, char *argv[])

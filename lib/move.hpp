@@ -1,5 +1,7 @@
 #include <type_traits>
 
+namespace lib {
+
 template <typename T>
 std::remove_reference_t<T>&& move(T&& x)
 {
@@ -19,4 +21,4 @@ T&& forward(<std::remove_reference_t<T>&& x)
     return static_cast<T&&>(x);
 }
 
-
+}
