@@ -16,6 +16,13 @@ target_link_libraries(matrix
     gtest
 )
 
+add_executable(lock_free lock_free_queue.cpp)
+target_link_libraries(lock_free
+    lib
+    gtest
+)
+
 gtest_discover_tests(forward_list)
 gtest_discover_tests(vector)
 gtest_discover_tests(matrix)
+gtest_discover_tests(lock_free)
