@@ -1,0 +1,21 @@
+Tasks. Myesherin
+Implement:
+
+1. string
+2. bigint
+3. matrix
+4. vector
+5. unordered_map
+6. shared_ptr
+7. tuple
+8. function
+9. variant
+
+extra:
+signal handler registration1
+sequenced before evaluation order
+
+std::decval
+
+Straustrup concepts
+MULTICS os
